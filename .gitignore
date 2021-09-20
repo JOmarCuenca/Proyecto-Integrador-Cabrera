@@ -1,0 +1,5 @@
+# Python stuff
+env/
+__pycache__
+.ipynb_checkpoints/
+.vscode/
