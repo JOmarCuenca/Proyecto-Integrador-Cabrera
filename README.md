@@ -2,10 +2,10 @@
 Repositorio para proyectos en equipo de Proyecto integrador de tecnologías emergentes con el Doctor Cabrera.
 
 - [Proyecto-Integrador-Cabrera](#proyecto-integrador-cabrera)
-  - [Miembres Equipo](#miembres-equipo)
+  - [Miembros Equipo](#miembros-equipo)
 - [Proyecto 1](#proyecto-1)
 
-## Miembres Equipo
+## Miembros Equipo
 
 - Jesús Omar Cuenca Espino A01378844
 
