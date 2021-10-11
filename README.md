@@ -32,6 +32,6 @@ Además, se tiene una notebook con el analisis estadistico del dataset
 
 ## Video de Presentación. 
 
-En el sigueinte link se puede ver la presentación del análisis del dataset y modelos para su clasificiación:
+En el sigueinte link se puede ver la presentación del análisis del dataset y modelos para su clasificación:
 https://youtu.be/risKtc3bsRQ
 
