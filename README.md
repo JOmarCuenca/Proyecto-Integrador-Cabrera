@@ -9,6 +9,7 @@ Repositorio para proyectos en equipo de Proyecto integrador de tecnologías emer
 
 - Jesús Omar Cuenca Espino A01378844
 - Fernanda G. Bueso Medina A00822411
+- Alberto Dávila Almaguer A01196987
 
 # Proyecto 1
 
@@ -21,3 +22,9 @@ Proyecto sobre Salud deportiva, utilizando el data set de [Kaggle](https://www.k
 Revisar que se cuenta con las sigueintes librerias y si es necesario desacrgarlas. A continuacion se presenta el comando para instalarlas desde terminal. Se recoemienda estar previamente en el ambiente de Anaconda deseado. ( conda activate –-NombreDelAmbiente)
 
 `conda install pandas, conda install numpy, conda install -c plotly plotly, conda install -c anaconda seaborn, conda install -c conda-forge lightgbm, conda install -c plotly plotly_express ` 
+
+## Instrucciones de uso 
+
+La carpeta de examples contiene distintas notebooks con las que se pueden construir distintos modelos de clasificación. Los algoritmos utilizados en este proyecto fueron Linear Regression, Random Forest y LightGBM. 
+
+Además, se tiene una notebook con el analisis estadistico del dataset
