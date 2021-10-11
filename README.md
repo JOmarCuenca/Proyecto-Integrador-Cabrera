@@ -10,4 +10,4 @@ Repositorio para proyectos en equipo de Proyecto integrador de tecnologías emer
 - Jesús Omar Cuenca Espino A01378844
 - Fernanda G. Bueso Medina A00822411
 - Gerardo A. Silva Razo A01136536
-- Jose Guillermo Cazares Rodriguez.
+- Jose Guillermo Cazares Rodriguez A01740254.
