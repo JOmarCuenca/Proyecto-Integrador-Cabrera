@@ -1,4 +1,5 @@
-#See comments in the tunning parameters section 
+#See comments in the re-sampling section 
+#and see comments above in the tunning parameters section
 import random
 import numpy as np
 from numpy import random
