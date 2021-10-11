@@ -29,3 +29,9 @@ Revisar que se cuenta con las sigueintes librerias y si es necesario desacrgarla
 La carpeta de examples contiene distintas notebooks con las que se pueden construir distintos modelos de clasificación. Los algoritmos utilizados en este proyecto fueron Linear Regression, Random Forest y LightGBM. 
 
 Además, se tiene una notebook con el analisis estadistico del dataset
+
+## Video de Presentación. 
+
+En el sigueinte link se puede ver la presentación del análisis del dataset y modelos para su clasificiación:
+https://youtu.be/risKtc3bsRQ
+
