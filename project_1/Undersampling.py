@@ -1,4 +1,4 @@
-#See comments in the tunning parameters section
+#See comments in the tunning parameters section 
 import random
 import numpy as np
 from numpy import random
@@ -10,11 +10,15 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import csv
-from imblearn.under_sampling import NearMiss
+from imblearn.under_sampling import NearMiss 
 from imblearn.over_sampling import SMOTE
 from imblearn.over_sampling import RandomOverSampler
 from collections import Counter
 from sklearn.utils.multiclass import class_distribution
+
+#commands for libraries:
+#pip install imbalance learn
+
 
 df = pd.read_csv("day_approach_maskedID_timeseries.csv")
 
@@ -49,7 +53,14 @@ X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_
 
 #Using NearMiss to undersample the class 0
 us = NearMiss(version=2,sampling_strategy=0.4)#Sample_strategy = 0.4 means class 0 is 1/0.4 bigger
-X_train_res, y_train_res = us.fit_resample(X_train, y_train)
+
+#use RandomOverSampler or SMOTE() for increasing class 1 sampels with same parameters
+#but it is not recommended for generalizating faster and better the classes
+os = RandomOverSampler(sampling_strategy=1,random_state=42)
+
+
+X_train_res, y_train_res = us.fit_resample(X_train, y_train)#Resampled data for training
+#X_train_res, y_train_res = os.fit_resample(X_train, y_train)
 print ("Distribution before resampling {}".format(Counter(y_train)))
 print ("Distribution before resampling {}".format(Counter(y_train_res)))
 
@@ -75,15 +86,15 @@ lgbm_params = {"n_estimators":100,'learning_rate':0.05, 'boosting_type':'dart', 
             "min_child_samples":200}
             
 #If the a class is too close to class 1 increasing parametes min_child_samples, num_leaves and max_depth
-#reduce the false-negatives and true-positives, increasing true negatives; this also happends the other way around
+#reduce the false-negatives and true-positives, increasing true negatives; this also happends the other way around;
+#n_estimators will favor the class with more samples if model is not complex enough.
 
-#if in result the model is too complex and cause overfitting reducing the class 0 elevate the true negatives but it must
-#probabily increases false positives
+#if in result, the model is too complex and cause overfitting reducing the class 0 elevate the true negatives but it must
+#probabily increases false positives, if the complexity is down to a level class 1 will prevail if no having enougth class 0 samples
 
 #we think that is nearly impossible for the model to perform well in both classes without increasing erros, having
-# to balance between giving more impact to one class or making a more complex model that attempts to generalize better the data
-#even when is unbalance, which is the worts case.
-
+# to decide between increasing class 1, giving more impact to one class or making a more complex model and then redistributing 
+# samples attemptting to generalize better the data, even it is unbalance, which is the main problem of the dataset.
 start=datetime.now()
 clf = lgb.train(lgbm_params, d_train, 900) #50 iterations. Increase iterations for small learning rates
 stop=datetime.now()
