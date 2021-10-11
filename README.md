@@ -21,7 +21,7 @@ Proyecto sobre Salud deportiva, utilizando el data set de [Kaggle](https://www.k
 
 Revisar que se cuenta con las sigueintes librerias y si es necesario desacrgarlas. A continuacion se presenta el comando para instalarlas desde terminal. Se recoemienda estar previamente en el ambiente de Anaconda deseado. ( conda activate –-NombreDelAmbiente)
 
-`conda install pandas, conda install numpy, conda install -c plotly plotly, conda install -c anaconda seaborn, conda install -c conda-forge lightgbm, conda install -c plotly plotly_express ` 
+`conda install -c anaconda pandas, conda install -c anaconda numpy, conda install -c plotly plotly, conda install -c anaconda seaborn, conda install -c conda-forge lightgbm, conda install -c plotly plotly_express ` 
 
 ## Instrucciones de uso 
 
