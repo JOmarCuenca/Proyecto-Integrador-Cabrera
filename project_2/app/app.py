@@ -19,6 +19,9 @@ current_camera = None
 @app.route('/')
 def index():
     """Video streaming home page."""
+    global current_camera
+    if(current_camera is None and isdir("demoFramesModified")):
+        current_camera = ModifiedCamera()
     if(current_camera is None):
         return render_template("empty.html")
     return render_template('index.html')
