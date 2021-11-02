@@ -1,10 +1,10 @@
-#imgGrid {
+.CenterElements {
     width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#imgGrid > img {
+.CenterElements > img {
     width: max(50vw,512px);
 }
