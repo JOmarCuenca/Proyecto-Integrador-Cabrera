@@ -47,8 +47,7 @@ def upload_file():
             if(not isdir(parentDir)):
                 makedirs(parentDir)
             file.save(join(parentDir, filename))
-            cleanAndBreak(parentDir+"/"+filename)
-            current_camera = ModifiedCamera()
+            current_camera = ModifiedCamera(cleanAndBreak(parentDir+"/"+filename))
             return redirect("/")
     return render_template("uploadFile.html")
 

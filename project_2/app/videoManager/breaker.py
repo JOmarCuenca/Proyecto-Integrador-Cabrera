@@ -21,10 +21,11 @@ def breakVideoIntoFrames(path_to_video : str):
     cv2.imwrite(__DEMO_M_PATH__+"frame%d.jpg" % count, modifiedImg)
     success,image = vidcap.read()
     count += 1
+  return count
 
 def cleanAndBreak(path_to_video : str):
   cleanAssets()
-  breakVideoIntoFrames(path_to_video)
+  return breakVideoIntoFrames(path_to_video)
 
 if __name__ == "__main__":
   cleanAssets()
