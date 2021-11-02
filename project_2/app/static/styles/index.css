@@ -1,0 +1,10 @@
+#imgGrid {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#imgGrid > img {
+    width: max(50vw,512px);
+}
