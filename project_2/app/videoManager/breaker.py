@@ -1,6 +1,7 @@
 import cv2
 from os import makedirs
 from shutil import rmtree
+from .social_distancing_detector.social_distancing_detector import FrameArgs, predictFrames
 
 __DEMO_PATH__   = "./demoFrames/"
 __DEMO_M_PATH__ = "./demoFramesModified/"
@@ -22,6 +23,10 @@ def breakVideoIntoFrames(path_to_video : str):
     success,image = vidcap.read()
     count += 1
   return count
+
+def analyzeStream(path_to_video: str):
+  cleanAssets()
+  predictFrames(FrameArgs(path_to_video, __DEMO_M_PATH__))
 
 def cleanAndBreak(path_to_video : str):
   cleanAssets()

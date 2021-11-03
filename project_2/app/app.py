@@ -4,7 +4,7 @@ from os.path import isdir, join
 from flask import Flask, flash, request, redirect, render_template, Response
 from werkzeug.utils import secure_filename
 from camera import ModifiedCamera
-from videoManager.breaker import cleanAndBreak
+from videoManager.breaker import cleanAndBreak, analyzeStream
 
 UPLOAD_FOLDER = './uploadedAssets'
 ALLOWED_EXTENSIONS = {"mp4", "avi", "mkv", "webm"}
@@ -50,7 +50,8 @@ def upload_file():
             if(not isdir(parentDir)):
                 makedirs(parentDir)
             file.save(join(parentDir, filename))
-            cleanAndBreak(parentDir+"/"+filename)
+            # cleanAndBreak(parentDir+"/"+filename)
+            analyzeStream(parentDir+"/"+filename)
             current_camera = ModifiedCamera()
             return redirect("/")
     return render_template("uploadFile.html")
