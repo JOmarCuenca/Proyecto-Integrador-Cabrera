@@ -5,6 +5,7 @@ from flask import Flask, flash, request, redirect, render_template, Response
 from werkzeug.utils import secure_filename
 from camera import ModifiedCamera
 from videoManager.breaker import cleanAndBreak, analyzeStream
+from threading import Thread
 
 UPLOAD_FOLDER = './uploadedAssets'
 ALLOWED_EXTENSIONS = {"mp4", "avi", "mkv", "webm"}
@@ -13,7 +14,8 @@ ALLOWED_EXTENSIONS = {"mp4", "avi", "mkv", "webm"}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-current_camera = None
+current_camera  = None
+breakerThread : Thread   = None
 
 
 @app.route('/')
@@ -32,7 +34,7 @@ def allowed_file(filename):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    global current_camera
+    global current_camera, breakerThread
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -44,14 +46,17 @@ def upload_file():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        if file and allowed_file(file.filename):
+        if file and allowed_file(file.filename) and (breakerThread is None or (breakerThread is not None and not breakerThread.is_alive())):
             filename = secure_filename(file.filename)
             parentDir = app.config["UPLOAD_FOLDER"]
             if(not isdir(parentDir)):
                 makedirs(parentDir)
             file.save(join(parentDir, filename))
             # cleanAndBreak(parentDir+"/"+filename)
-            analyzeStream(parentDir+"/"+filename)
+            path = parentDir+"/"+filename
+
+            breakerThread = Thread(target=analyzeStream, args=(path,))
+            breakerThread.start()
             current_camera = ModifiedCamera()
             return redirect("/")
     return render_template("uploadFile.html")

@@ -25,6 +25,7 @@ def breakVideoIntoFrames(path_to_video : str):
   return count
 
 def analyzeStream(path_to_video: str):
+  print(" Begin analyzing ".capitalize().center(30,"="))
   cleanAssets()
   predictFrames(FrameArgs(path_to_video, __DEMO_M_PATH__))
 
