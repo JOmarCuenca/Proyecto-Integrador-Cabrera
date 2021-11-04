@@ -18,7 +18,6 @@ def breakVideoIntoFrames(path_to_video : str):
   count = 0
   while success:
     modifiedImg = cv2.flip(image, 0)
-    # cv2.imwrite(__DEMO_PATH__+"frame%d.jpg" % count, image)
     cv2.imwrite(__DEMO_M_PATH__+"frame%d.jpg" % count, modifiedImg)
     success,image = vidcap.read()
     count += 1

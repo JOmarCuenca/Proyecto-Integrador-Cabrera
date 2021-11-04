@@ -6,4 +6,4 @@ app/demoFramesModified
 *.avi
 *.mkv
 *.webm
-app/videoManager/social_distancing_detector/yolo-coco/yolov3.weights
+*.weights
