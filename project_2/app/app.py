@@ -4,7 +4,7 @@ from os.path import isdir, join
 from flask import Flask, flash, request, redirect, render_template, Response
 from werkzeug.utils import secure_filename
 from camera import ModifiedCamera
-from videoManager.breaker import cleanAndBreak, analyzeStream
+from videoManager.breaker import analyzeStream
 from threading import Thread
 
 UPLOAD_FOLDER = './uploadedAssets'
@@ -46,18 +46,26 @@ def upload_file():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
+        # If the file is allowed and there isn't another video being processed
         if file and allowed_file(file.filename) and (breakerThread is None or (breakerThread is not None and not breakerThread.is_alive())):
+            
+            # Save the video locally
             filename = secure_filename(file.filename)
             parentDir = app.config["UPLOAD_FOLDER"]
             if(not isdir(parentDir)):
                 makedirs(parentDir)
             file.save(join(parentDir, filename))
-            # cleanAndBreak(parentDir+"/"+filename)
-            path = parentDir+"/"+filename
 
+            # Create the background Thread for stream-like reproduction
+            path = parentDir+"/"+filename
             breakerThread = Thread(target=analyzeStream, args=(path,))
+            # Start the thread
             breakerThread.start()
+
+            # Create the camera
             current_camera = ModifiedCamera()
+
+            # Return to home
             return redirect("/")
     return render_template("uploadFile.html")
 
@@ -67,7 +75,6 @@ def gen(camera):
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
 
 @app.route('/video_feed')
 def video_feed():

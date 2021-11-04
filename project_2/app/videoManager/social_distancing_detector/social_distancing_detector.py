@@ -44,7 +44,9 @@ class BoundingBox:
         return f"[{self.x1}, {self.y1}, {self.x2}, {self.y2}]"
 
 def getArgs() -> Args:
-    # construct the argument parser and parse the arguments
+    """
+    Construct the argument parser and parse the arguments
+    """
     ap = ArgumentParser()
     ap.add_argument("-i", "--input", type=str, default="", help="path to (optional) input video file")
     ap.add_argument("-o", "--output", type=str, default="", help="path to (optional) output video file")
@@ -107,17 +109,6 @@ def get_iou(bb1 : BoundingBox, bb2 : BoundingBox):
     """
     Calculate the Intersection over Union (IoU) of two bounding boxes.
 
-    Parameters
-    ----------
-    bb1 : dict
-        Keys: {'x1', 'x2', 'y1', 'y2'}
-        The (x1, y1) position is at the top left corner,
-        the (x2, y2) position is at the bottom right corner
-    bb2 : dict
-        Keys: {'x1', 'x2', 'y1', 'y2'}
-        The (x, y) position is at the top left corner,
-        the (x2, y2) position is at the bottom right corner
-
     Returns
     -------
     float
@@ -170,9 +161,9 @@ def main(args : Args):
             break
 
         # resize the frame and then detect people (only people) in it
-        frame = imutils.resize(frame, width=700)
-        results = detect_people(frame, __net, __ln, personIdx=__LABELS.index("person"))
-        face_results = detect_faces(frame, __face_net, __face_ln, godIdx=__FACE_LABELS.index("Good"), badIdx=__FACE_LABELS.index("Bad"))
+        frame           = imutils.resize(frame, width=700)
+        results         = detect_people(frame, __net, __ln, personIdx=__LABELS.index("person"))
+        face_results    = detect_faces(frame, __face_net, __face_ln, godIdx=__FACE_LABELS.index("Good"), badIdx=__FACE_LABELS.index("Bad"))
 
         # initialize the set of indexes that violate the minimum social distance
         violate = set()
@@ -199,7 +190,7 @@ def main(args : Args):
         
         # loop over the results
         for (i, (prob, bbox, centroid)) in enumerate(results):
-            # extract teh bounding box and centroid coordinates, then initialize the color of the annotation
+            # extract the bounding box and centroid coordinates, then initialize the color of the annotation
             (startX, startY, endX, endY) = bbox
             # (cX, cY) = centroid
             color = (0, 255, 0)
@@ -211,9 +202,8 @@ def main(args : Args):
                 #result_text='Alto riesgo'
                 violating_BB.add(BoundingBox.fromT(bbox))
 
-            # draw (1) a bounding box around the person and (2) the centroid coordinates of the person
+            # draw (1) a bounding box around the person 
             cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
-            # cv2.circle(frame, (cX, cY), 5, color, 1)
 
         # # draw the total number of social distancing violations on the output frame
         # text = "Social Distancing Violations: {}".format(len(violate))
@@ -231,15 +221,9 @@ def main(args : Args):
                 if(len(ious) > 0 and max(ious) > .002):
                     result_text='Alto riesgo'
 
-            # draw (1) a bounding box around the person and (2) the centroid coordinates of the person 
+            # draw (1) a bounding box around the face and (2) add the corresponding text according to the situation 
             cv2.rectangle(frame, (startX, startY), (endX, endY), (255, 0, 0), 2)       
             cv2.putText(frame, result_text, (startX, startY-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-
-       # cv2.circle(frame, (cX, cY), 5, color, 1)
-
-    # draw the total number of social distancing violations on the output frame
-    #text = "Social Distancing Violations: {}".format(len(violate))
-    #cv2.putText(frame, text, (10, frame.shape[0] - 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
 
         # check to see if the output frame should be displayed to the screen
         if args.display > 0:
@@ -260,7 +244,6 @@ def main(args : Args):
 
         # if the video writer is not None, write the frame to the output video file
         if writer is not None:
-            # print("[INFO] writing stream to output")
             writer.write(frame)
 
 def predictFrames(args : FrameArgs):
@@ -268,7 +251,6 @@ def predictFrames(args : FrameArgs):
     print("[INFO] accessing video stream...")
     # open input video if available else webcam stream
     vs = cv2.VideoCapture(args.input if args.input else 0)
-    writer = None
 
     count = 0
 
@@ -282,9 +264,9 @@ def predictFrames(args : FrameArgs):
             break
 
         # resize the frame and then detect people (only people) in it
-        frame = imutils.resize(frame, width=700)
-        results = detect_people(frame, __net, __ln, personIdx=__LABELS.index("person"))
-        face_results = detect_faces(frame, __face_net, __face_ln, godIdx=__FACE_LABELS.index("Good"), badIdx=__FACE_LABELS.index("Bad"))
+        frame           = imutils.resize(frame, width=700)
+        results         = detect_people(frame, __net, __ln, personIdx=__LABELS.index("person"))
+        face_results    = detect_faces(frame, __face_net, __face_ln, godIdx=__FACE_LABELS.index("Good"), badIdx=__FACE_LABELS.index("Bad"))
 
         # initialize the set of indexes that violate the minimum social distance
         violate = set()
@@ -325,21 +307,17 @@ def predictFrames(args : FrameArgs):
 
             # draw (1) a bounding box around the person and (2) the centroid coordinates of the person
             cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
-            # cv2.circle(frame, (cX, cY), 5, color, 1)
-
-        # # draw the total number of social distancing violations on the output frame
-        # text = "Social Distancing Violations: {}".format(len(violate))
-        # cv2.putText(frame, text, (10, frame.shape[0] - 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
 
         for (i, (prob, bbox, centroid)) in enumerate(face_results):
             # extract the bounding box and centroid coordinates, then initialize the color of the annotation
             (startX, startY, endX, endY) = bbox
             result_text='Bajo riesgo'
 
-            #if the index pair exists within the violation set, then update the color
+            #if the index indicates "Bad"/Not wearing a mask
             if i == 1:
                 bb = BoundingBox.fromT(bbox)
                 ious = [get_iou(vBB,bb) for vBB in violating_BB]
+                # And it's bounding box coincides with someone breaking safe distance
                 if(len(ious) > 0 and max(ious) > .002):
                     result_text='Alto riesgo'
 
@@ -347,19 +325,12 @@ def predictFrames(args : FrameArgs):
             cv2.rectangle(frame, (startX, startY), (endX, endY), (255, 0, 0), 2)       
             cv2.putText(frame, result_text, (startX, startY-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
-       # cv2.circle(frame, (cX, cY), 5, color, 1)
-
-    # draw the total number of social distancing violations on the output frame
-    #text = "Social Distancing Violations: {}".format(len(violate))
-    #cv2.putText(frame, text, (10, frame.shape[0] - 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
 
         cv2.imwrite(f"{args.path}frame{count}.jpg",frame)
         count += 1
 
+# Regardless of the case we setup the NN for further use.
 setUpNN()
 
 if __name__ == "__main__":
     main(getArgs())
-    # predictFrames(FrameArgs("../../uploadedAssets/IMG_9841.mp4",
-    #     "frames/"
-    # ), targetLabel="Good")

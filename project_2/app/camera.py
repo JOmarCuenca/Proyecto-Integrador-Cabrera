@@ -73,11 +73,4 @@ class ModifiedCamera(BaseCamera):
     def frames():
         while True:
             time.sleep(1/30)
-            # if(len(ModifiedCamera.imgs) != 0):
-            #     yield ModifiedCamera.imgs[ModifiedCamera.index]
-            #     ModifiedCamera.index += 1
-            #     if(ModifiedCamera.index >= len(ModifiedCamera.imgs)):
-            #         ModifiedCamera.index = 0
-            # else:
-            #     yield PLACEHOLDER
             yield ModifiedCamera.get_current_frame(ModifiedCamera.index + 1)
