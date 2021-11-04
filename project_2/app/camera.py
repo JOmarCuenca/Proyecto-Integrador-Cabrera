@@ -72,7 +72,7 @@ class ModifiedCamera(BaseCamera):
     @staticmethod
     def frames():
         while True:
-            time.sleep(1/60)
+            time.sleep(1/30)
             # if(len(ModifiedCamera.imgs) != 0):
             #     yield ModifiedCamera.imgs[ModifiedCamera.index]
             #     ModifiedCamera.index += 1

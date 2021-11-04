@@ -33,7 +33,7 @@ def getArgs() -> Args:
     ap.add_argument("-d", "--display", type=int, default=1, help="whether or not output frame should be displayed")
 
     temp = ap.parse_args()
-    return Args(temp["input"], temp["output"], temp["display"])
+    return Args(temp.input, temp.output, temp.display)
 
 def setUpNN():
     global __net, __LABELS, __ln
@@ -54,7 +54,9 @@ def setUpNN():
         # set CUDA s the preferable backend and target
         print("[INFO] setting preferable backend and target to CUDA...")
         __net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+        # print(f"cv2.dnn.DNN_BACKEND_CUDA {cv2.dnn.DNN_BACKEND_CUDA}")
         __net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+        # print(f"cv2.dnn.DNN_TARGET_CUDA {cv2.dnn.DNN_TARGET_CUDA}")
 
     # determine only the "output" layer names that we need from YOLO
     ln = __net.getLayerNames()
@@ -139,7 +141,7 @@ def main(args : Args):
 
         # if the video writer is not None, write the frame to the output video file
         if writer is not None:
-            print("[INFO] writing stream to output")
+            # print("[INFO] writing stream to output")
             writer.write(frame)
 
 def predictFrames(args : FrameArgs):
