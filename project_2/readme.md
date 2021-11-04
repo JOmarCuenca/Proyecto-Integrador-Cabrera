@@ -56,7 +56,13 @@ Posteriormente, cuando el ambiente se encuentre listo solamente es necesario cor
 ```
   python3 app.py
 ```
- 
+### Entrenar la red del Dataset Face Mask
+
+En caso de que se quiera entrenar la red neuronal para la identificación de una persona con o sin cubrebocas se puede ingresar al siguiente Google colab y hacer una copia del archivo
+
+```
+  https://colab.research.google.com/drive/1ZIIZwICi3qgxp9aRr-SyYb0DOYSBMC0r?usp=sharing
+``` 
 ## Creditos
 
 Aqui damos creditos de los 2 repositorios de Github que usamos como apoyo para la creacion del servidor Flask y la NN de yolo
