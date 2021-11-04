@@ -1,2 +1,9 @@
 python/env
 **/node_modules/
+app/demoFrames
+app/demoFramesModified
+*.mp4
+*.avi
+*.mkv
+*.webm
+*.weights
